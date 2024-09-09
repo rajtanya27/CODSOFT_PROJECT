@@ -1,0 +1,86 @@
+# CODSOFT_PROJECT
+def __init__(self):
+        self.tasks = []
+
+    def add_task(self):
+        task_name = input("Enter task name: ")
+        task_description = input("Enter task description: ")
+        task_priority = input("Enter task priority (high/medium/low): ")
+        task_status = "Not Started"
+        task = {
+            "name": task_name,
+            "description": task_description,
+            "priority": task_priority,
+            "status": task_status
+        }
+        self.tasks.append(task)
+        print("Task added successfully!")
+
+    def view_tasks(self):
+        if not self.tasks:
+            print("No tasks found!")
+        else:
+            print("Task List:")
+            for i, task in enumerate(self.tasks, start=1):
+                print(f"{i}. {task['name']} - {task['status']}")
+
+    def update_task(self):
+        self.view_tasks()
+        task_index = int(input("Enter the task number to update: ")) - 1
+        if task_index < 0 or task_index >= len(self.tasks):
+            print("Invalid task number!")
+        else:
+            task = self.tasks[task_index]
+            print("Enter new details (press enter to skip):")
+            task["name"] = input(f"Name ({task['name']}): ") or task["name"]
+            task["description"] = input(f"Description ({task['description']}): ") or task["description"]
+            task["priority"] = input(f"Priority ({task['priority']}): ") or task["priority"]
+            task["status"] = input(f"Status ({task['status']}): ") or task["status"]
+            print("Task updated successfully!")
+
+    def delete_task(self):
+        self.view_tasks()
+        task_index = int(input("Enter the task number to delete: ")) - 1
+        if task_index < 0 or task_index >= len(self.tasks):
+            print("Invalid task number!")
+        else:
+            del self.tasks[task_index]
+            print("Task deleted successfully!")
+
+    def mark_task_as_completed(self):
+        self.view_tasks()
+        task_index = int(input("Enter the task number to mark as completed: ")) - 1
+        if task_index < 0 or task_index >= len(self.tasks):
+            print("Invalid task number!")
+        else:
+            self.tasks[task_index]["status"] = "Completed"
+            print("Task marked as completed!")
+
+def main():
+    todo_list = ToDoList()
+    while True:
+        print("\nTo-Do List Application")
+        print("1. Add Task")
+        print("2. View Tasks")
+        print("3. Update Task")
+        print("4. Delete Task")
+        print("5. Mark Task as Completed")
+        print("6. Exit")
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            todo_list.add_task()
+        elif choice == "2":
+            todo_list.view_tasks()
+        elif choice == "3":
+            todo_list.update_task()
+        elif choice == "4":
+            todo_list.delete_task()
+        elif choice == "5":
+            todo_list.mark_task_as_completed()
+        elif choice == "6":
+            break
+        else:
+            print("Invalid choice!")
+
+if __name__ == "__main__":
+    main()
